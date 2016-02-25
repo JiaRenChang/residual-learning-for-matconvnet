@@ -29,8 +29,6 @@ switch opts.modelType
     net = cnn_cifar_init('networkType', opts.networkType) ;
   case 'nin'
     net = cnn_cifar_init_nin('networkType', opts.networkType) ;
-  case 'dagnets'
-    net = dagnn_init_cifar10_mnin4('networkType', opts.networkType) ;   
   case 'resnets'
     net = Residual_init_cifar_BN20('networkType', opts.networkType) ; 
   otherwise
