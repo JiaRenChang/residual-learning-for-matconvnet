@@ -9,5 +9,7 @@ We got 8.82% test error in CIFAR-10, and it was very close to 8.75% test error i
 ![Training and Test error curve](http://i.imgur.com/xZbQAs1.png)
 
 Useage:
+
 1. Please install matconvnet ( https://github.com/vlfeat/matconvnet ), my version is beta17
+
 2. Download those files and run cnn_cifar.m 
