@@ -2,15 +2,12 @@ function net = Residual_init_cifar_BN20(varargin)
 opts.networkType = 'dagnn' ;
 opts = vl_argparse(opts, varargin) ;
 
-f=0.01;
-g=0.05;
-
 import dagnn.*
 net = DagNN() ;
 
 convblock = Conv();  convblock.size = [3 3 3 16];        convblock.hasBias=true;     convblock.pad=1;  convblock.stride=1; %32
 net.addLayer('Gconv1',convblock,{'input'},{'x1'},{'Gconv1f','Gconv1b'});
-net.params(end-1).value = f*randn(3,3,3,16,'single');
+net.params(end-1).value = sqrt(2/(9*16))*randn(3,3,3,16,'single');
 net.params(end).value = zeros(1,16,'single');
 net.params(end-1).learningRate = .1;
 net.params(end).learningRate = .1;
@@ -51,9 +48,8 @@ startway1 = way1;
 %% trasnform layer
 
 convblock = Conv(); convblock.size = [3 3 16 32];   convblock.hasBias=true;    convblock.pad=1;    convblock.stride=2; %16
-net.addLayer('tranconv1',convblock,{sprintf('x%d',startway1)},{sprintf('x%d',startway1+1)},{'tranconv1f','tranconv1b'});
-net.params(end-1).value = g*randn(3,3,16,32,'single');
-net.params(end).value = zeros(1,32,'single');
+net.addLayer('tranconv1',convblock,{sprintf('x%d',startway1)},{sprintf('x%d',startway1+1)},{'tranconv1f'});
+net.params(end).value = sqrt(2/(9*32))*randn(3,3,16,32,'single');
 net.params(end-1).learningRate = .1;
 net.params(end).learningRate = .1;
 net.params(end-1).weightDecay = 1;
@@ -85,9 +81,8 @@ startway1 = way1;
 
 %% trasnform layer
 convblock = Conv(); convblock.size = [3 3 32 64];   convblock.hasBias=true;    convblock.pad=1;    convblock.stride=2; %16
-net.addLayer('tranconv1_2',convblock,{sprintf('x%d',startway1)},{sprintf('x%d',startway1+1)},{'tranconv1f_2','tranconv1b_2'});
-net.params(end-1).value = g*randn(3,3,32,64,'single');
-net.params(end).value = zeros(1,64,'single');
+net.addLayer('tranconv1_2',convblock,{sprintf('x%d',startway1)},{sprintf('x%d',startway1+1)},{'tranconv1f_2'});
+net.params(end).value = sqrt(2/(9*64))*randn(3,3,32,64,'single');
 net.params(end-1).learningRate = .1;
 net.params(end).learningRate = .1;
 net.params(end-1).weightDecay = 1;
@@ -124,7 +119,7 @@ net.addLayer('pool1',poolbock,{sprintf('x%d',outway)},{sprintf('x%d',outway+1)},
 %% ending layer
 convblock = Conv(); convblock.size = [1 1 64 10];   convblock.hasBias=true;    convblock.pad=0;    convblock.stride=1; %
 net.addLayer('end_conv1',convblock,{sprintf('x%d',outway+1)},{sprintf('x%d',outway+2)},{'end_conv1f','end_conv1b'});
-net.params(end-1).value = g*randn(1,1,64,10,'single');
+net.params(end-1).value = sqrt(2/(1*10))*randn(1,1,64,10,'single');
 net.params(end).value = zeros(1,10,'single');
 net.params(end-1).learningRate = .1;
 net.params(end).learningRate = .1;
@@ -176,7 +171,7 @@ import dagnn.*
 
 convblock = Conv('size',[h w in out],'hasBias',true,'pad',pad,'stride',stride);
 net.addLayer(sprintf('res_Conv%d', id),convblock,{sprintf('x%d',inputid)},{sprintf('x%d',startid+1)},{sprintf('resf%d',id),sprintf('resb%d',id)});
-net.params(end-1).value = 0.05*randn(h,w,in,out,'single');
+net.params(end-1).value = sqrt(2/(h*h*out))*randn(h,w,in,out,'single');
 net.params(end).value = zeros(1,out,'single');
 net.params(end-1).learningRate = .1;
 net.params(end).learningRate = .1;
@@ -200,7 +195,7 @@ net.addLayer(sprintf('res_relu%d',id),actblock,{sprintf('x%d',startid+2)},{sprin
 
 convblock = Conv('size',[h w out out],'hasBias',true,'pad',pad,'stride',1);
 net.addLayer(sprintf('res_Conv2_%d', id),convblock,{sprintf('x%d',startid+3)},{sprintf('x%d',startid+4)},{sprintf('resf_2_%d',id),sprintf('resb_2_%d',id)});
-net.params(end-1).value = 0.05*randn(h,w,out,out,'single');
+net.params(end-1).value = sqrt(2/(h*h*out))*randn(h,w,out,out,'single');
 net.params(end).value = zeros(1,out,'single');
 net.params(end-1).learningRate = .1;
 net.params(end).learningRate = .1;
