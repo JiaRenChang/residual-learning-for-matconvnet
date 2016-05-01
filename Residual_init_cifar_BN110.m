@@ -47,9 +47,9 @@ startway1 = way1;
 
 %% trasnform layer
 
-convblock = Conv(); convblock.size = [3 3 16 32];   convblock.hasBias=true;    convblock.pad=1;    convblock.stride=2; %16
+convblock = Conv(); convblock.size = [1 1 16 32];   convblock.hasBias=true;    convblock.pad=0;    convblock.stride=2; %16
 net.addLayer('tranconv1',convblock,{sprintf('x%d',startway1)},{sprintf('x%d',startway1+1)},{'tranconv1f'});
-net.params(end).value = sqrt(2/(9*32))*randn(3,3,16,32,'single');
+net.params(end).value = sqrt(2/(9*32))*randn(1,1,16,32,'single');
 net.params(end-1).learningRate = .1;
 net.params(end).learningRate = .1;
 net.params(end-1).weightDecay = 1;
@@ -80,9 +80,9 @@ end
 startway1 = way1; 
 
 %% trasnform layer
-convblock = Conv(); convblock.size = [3 3 32 64];   convblock.hasBias=true;    convblock.pad=1;    convblock.stride=2; %16
+convblock = Conv(); convblock.size = [1 1 32 64];   convblock.hasBias=true;    convblock.pad=0;    convblock.stride=2; %16
 net.addLayer('tranconv1_2',convblock,{sprintf('x%d',startway1)},{sprintf('x%d',startway1+1)},{'tranconv1f_2'});
-net.params(end).value = sqrt(2/(9*64))*randn(3,3,32,64,'single');
+net.params(end).value = sqrt(2/(9*64))*randn(1,1,32,64,'single');
 net.params(end-1).learningRate = .1;
 net.params(end).learningRate = .1;
 net.params(end-1).weightDecay = 1;
