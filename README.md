@@ -10,6 +10,11 @@ We got 8.82% test error in CIFAR-10, and it was very close to 8.75% test error i
 
 Usage:
 
-1. Please install matconvnet ( https://github.com/vlfeat/matconvnet ), my version is beta17
+1. Please install my modification of matconvnet
+<blockquote>
+   https://github.com/JiaRenChang/Batch_Normalized_Maxout_NIN
+</blockquote>
 
-2. Download those files and run cnn_cifar.m 
+2. Download those files and replace.
+
+3. run cnn_cifar.m
